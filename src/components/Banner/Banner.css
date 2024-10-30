@@ -1,0 +1,15 @@
+.custom-carousel .carousel .thumbs-wrapper {
+    justify-content: center;
+    display: flex;
+}
+
+.custom-carousel .carousel .thumbs {
+    display: flex;
+    justify-content: center;
+    width: auto;
+    margin: 0 auto;
+}
+
+.custom-carousel .carousel .thumb {
+    margin: 0 5px;
+}
