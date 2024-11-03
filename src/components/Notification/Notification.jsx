@@ -4,7 +4,6 @@ import { FaDeleteLeft } from 'react-icons/fa6';
 import useAuth from '../../hooks/useAuth';
 import useNotification from '../../hooks/useNotification';
 
-
 const Notification = () => {
     const { user } = useAuth();
     const [userNotifications, refetch] = useNotification();
@@ -29,7 +28,7 @@ const Notification = () => {
                                     <div className='flex-1'>
                                         <p>{notification.message}</p>
                                         <p className="text-gray-500 text-sm">
-                                            {new Date(notification.date).toLocaleDateString('en-US', {
+                                            {new Date(notification.date).toLocaleDateString('fr-FR', {
                                                 weekday: 'long',
                                                 year: 'numeric',
                                                 month: 'long',
@@ -50,7 +49,7 @@ const Notification = () => {
                             </div>
                         ))
                     ) : (
-                        <p className="text-gray-500 text-center font-semibold">No notifications to show.</p>
+                        <p className="text-gray-500 text-center font-semibold">Aucune notification à afficher.</p>
                     )
                 }
             </div>

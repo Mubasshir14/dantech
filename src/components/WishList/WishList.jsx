@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import Dashboard from "../Dashboard/Dashboard";
+// import Dashboard from "../Dashboard/Dashboard";
 import { Link, useNavigate } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -12,13 +12,13 @@ const WishList = () => {
 
     const handleDelete = id => {
         Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
+            title: "Êtes-vous sûr ?",
+            text: "Vous ne pourrez pas revenir en arrière !",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Oui, supprimez-le !"
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`https://dantech-server.onrender.com/wishlist/${id}`)
@@ -26,14 +26,14 @@ const WishList = () => {
                         if (res.data.deletedCount > 0) {
                             refetch();
                             Swal.fire({
-                                title: "Deleted!",
-                                text: "Your item has been deleted.",
+                                title: "Supprimé !",
+                                text: "Votre article a été supprimé.",
                                 icon: "success"
                             });
                         }
                     })
                     .catch(error => {
-                        Swal.fire("Error", "There was an issue deleting the item.", "error");
+                        Swal.fire("Erreur", "Il y a eu un problème lors de la suppression de l'article.", "error");
                     });
             }
         });
@@ -51,9 +51,9 @@ const WishList = () => {
 
     return (
         <div>
-            <Dashboard />
-            <div className='max-w-screen-xl mx-auto min-h-[calc(100vh-250px)] md:-mt-32 -mt-36 p-4 md:p-8'>
-                <div className="text-black font-bold text-xl md:text-2xl font-poppin uppercase text-center mb-8">WishList</div>
+            {/* <Dashboard /> */}
+            <div className='max-w-screen-xl mx-auto min-h-[calc(100vh-250px)]  p-4 md:p-8'>
+                <div className="text-black font-bold text-xl md:text-2xl font-poppin uppercase text-center mb-8">Liste de souhaits</div>
 
                 {wishList.length > 0 ? (
                     <div className='flex items-center lg:justify-center lg:flex-row flex-col gap-4'>
@@ -90,7 +90,7 @@ const WishList = () => {
                                         <div>
                                             <div className="flex flex-col lg:flex-row lg:gap-3">
                                                 <h2 className="text-[#FF4240] font-extrabold mb-3 lg:mb-0">
-                                                    Price - ${(item.price).toFixed(0)}
+                                                    Prix - ${(item.price).toFixed(0)}
                                                 </h2>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@ const WishList = () => {
                     <div className="text-center p-4 rounded-lg">
                         <Link to="/shop">
                             <button className="bg-gray-600 text-white px-4 py-2 text-xl rounded mt-4">
-                                Continue Shopping
+                                Continuer vos achats
                             </button>
                         </Link>
                     </div>

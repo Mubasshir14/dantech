@@ -58,14 +58,14 @@ const Search = () => {
                             onClick={toggleDrawer}
                         >
                             <h1 className='flex gap-2 text-xl items-center'>
-                                Filter <FaFilter className='text-xl' />
+                                Filtrer <FaFilter className='text-xl' />
                             </h1>
                         </button>
                     </div>
 
                     {/* Product Content */}
                     <div className='flex-1 lg:mt-12 mb-6 p-2'>
-                        <h1 className='md:text-4xl text-2xl uppercase font-extrabold text-center mb-4'>Your Search Result</h1>
+                        <h1 className='md:text-3xl text-2xl uppercase font-extrabold text-center mb-4'>Votre Résultat de Recherche</h1>
 
                         {/* Sorting Dropdown */}
                         <div className='flex justify-center mb-4'>
@@ -74,21 +74,21 @@ const Search = () => {
                                 onChange={(e) => handleSort(e.target.value)}
                                 className='p-2 border border-gray-300 rounded'
                             >
-                                <option value='default'>Default</option>
-                                <option value='priceLowToHigh'>Low to High</option>
-                                <option value='priceHighToLow'>High to Low</option>
+                                <option value='default'>Par Défaut</option>
+                                <option value='priceLowToHigh'>Prix - Bas à Élevé</option>
+                                <option value='priceHighToLow'>Prix - Élevé à Bas</option>
                                 <option value='alphabetical'>A-Z</option>
-                                <option value='newest'>Newest First</option>
+                                <option value='newest'>Les Plus Récents</option>
                             </select>
                         </div>
 
-                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3'>
                             {sortedResults.length > 0 ? (
                                 sortedResults.map(p => (
                                     <ProductCard key={p._id} p={p} /> 
                                 ))
                             ) : (
-                                <p>No results found.</p>
+                                <p className='text-center font-poppin'>Aucun résultat trouvé.</p>
                             )}
                         </div>
                     </div>

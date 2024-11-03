@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -16,11 +16,8 @@ const Payment = () => {
     const [clientSecret, setClientSecret] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState(null);
-    // const hasFetchedClientSecret = useRef(false);
 
     const fetchClientSecret = useCallback(async (displayPrice, orderDetails) => {
-        // if (hasFetchedClientSecret.current || !orderDetails) return;
-
         try {
             const response = await axios.post('https://dantech-server.onrender.com/create-payment-intent', {
                 amount: displayPrice,
@@ -28,7 +25,6 @@ const Payment = () => {
             });
 
             setClientSecret(response.data.clientSecret);
-            // hasFetchedClientSecret.current = true;
         } catch (err) {
             setError(err.message);
             console.error("Error fetching client secret:", err);
@@ -63,34 +59,30 @@ const Payment = () => {
             console.log(`Client secret: ${clientSecret}`);
 
             if (paymentIntent.status === 'succeeded') {
-                // objet create all data orderDetails 
-                try{
+                // Send all data from orderDetails
+                try {
                     await axios.post('https://dantech-server.onrender.com/payment', {
                         amount: displayPrice,
                         ...orderDetails,
                         tnxID: paymentIntent.id 
                     });
                     Swal.fire({
-                        title: 'Payment Successful!',
-                        text: 'Your payment was processed successfully.',
+                        title: 'Paiement réussi !',
+                        text: 'Votre paiement a été traité avec succès.',
                         icon: 'success',
                         confirmButtonText: 'OK',
-                    })
-                        navigate('/payment-success', { state: { orderDetails, paymentIntent } });
-                 
-                }
-                catch(err){
+                    });
+                    navigate('/payment-success', { state: { orderDetails, paymentIntent } });
+                } catch (err) {
                     console.log(err);
                 }
-    
-               
             } else if (error) {
                 setError(error.message);
             } else {
-                setError("Payment was not successful. Please try again.");
+                setError("Le paiement n'a pas été réussi. Veuillez réessayer.");
             }
         } catch (err) {
-            setError("An unexpected error occurred. Please try again.");
+            setError("Une erreur inattendue s'est produite. Veuillez réessayer.");
         } finally {
             setIsProcessing(false);
             setIsButtonDisabled(false);
@@ -102,15 +94,15 @@ const Payment = () => {
             <div className='flex items-center justify-center min-h-[calc(100vh-150px)]'>
                 <div className="payment-form border-2 border-black p-4 rounded-lg bg-gray-800/10">
                     <form onSubmit={handlePayment} className='space-y-4'>
-                        <img src={visa} className='w-80' alt="Visa Logo" />
-                        <h2 className='text-center font-bold text-xl'>Total Price: ${displayPrice}</h2>
+                        <img src={visa} className='w-80' alt="Logo Visa" />
+                        <h2 className='text-center font-bold text-xl'>Prix total : ${displayPrice}</h2>
                         <CardElement className='border-2 p-4 rounded-lg border-black' />
                         {error && <p className="text-red-500">{error}</p>}
                         <button
                             disabled={!stripe || isProcessing || isButtonDisabled}
-                            className={`pay-now-button btn btn-outline w-full `}
+                            className={`pay-now-button btn btn-outline w-full`}
                         >
-                            Pay Now
+                            Payer maintenant
                         </button>
                     </form>
                 </div>

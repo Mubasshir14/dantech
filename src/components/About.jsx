@@ -3,32 +3,32 @@ import React from 'react';
 const About = () => {
     return (
         <section className="container mx-auto py-12 px-6 max-w-screen-xl text-justify">
-            <h1 className="text-3xl font-semibold text-center mb-8 font-poppin uppercase ">About Us</h1>
+            <h1 className="text-3xl font-semibold text-center mb-8 font-poppin uppercase ">À Propos de Nous</h1>
             
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                Welcome to <span className="font-semibold">DANTECH</span>! Since our launch in 2024, we’ve been committed to curating a premium selection of electronics and accessories designed to enhance your life and keep you connected in a fast-paced digital world.
+                Bienvenue chez <span className="font-semibold">DANTECH</span> ! Depuis notre lancement en 2024, nous nous engageons à proposer une sélection premium d'électronique et d'accessoires conçus pour améliorer votre vie et vous garder connecté dans un monde numérique en constante évolution.
             </p>
             
-            <h2 className="text-2xl font-semibold text-[#097969] mb-4">Our Mission</h2>
+            <h2 className="text-2xl font-semibold text-[#097969] mb-4">Notre Mission</h2>
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                At DANTECH, we believe technology should be accessible, reliable, and innovative. Our mission is to provide high-quality gadgets that are built to last, whether for work, play, or anything in between. We aim to empower our customers with technology that enriches their day-to-day experiences.
+                Chez DANTECH, nous croyons que la technologie doit être accessible, fiable et innovante. Notre mission est de fournir des gadgets de haute qualité conçus pour durer, que ce soit pour le travail, le loisir ou tout autre besoin. Nous visons à donner à nos clients une technologie qui enrichit leurs expériences quotidiennes.
             </p>
             
-            <h2 className="text-2xl font-semibold text-[#097969] mb-4">Why Choose Us?</h2>
+            <h2 className="text-2xl font-semibold text-[#097969] mb-4">Pourquoi Choisir DANTECH ?</h2>
             <ul className="list-disc list-inside text-gray-700 text-lg leading-relaxed mb-6">
-                <li><span className="font-semibold">Quality Assurance</span>: Every product we offer goes through rigorous testing to ensure it meets our high standards.</li>
-                <li><span className="font-semibold">Customer-Centric Service</span>: We prioritize your satisfaction and provide friendly, knowledgeable support to make your shopping experience seamless.</li>
-                <li><span className="font-semibold">Innovation</span>: Our product line is always expanding with the latest in tech and accessories, so you stay ahead of the curve.</li>
-                <li><span className="font-semibold">Wide Selection</span>: From the newest gadgets to trusted brands, we have a diverse range of electronics to fit every lifestyle.</li>
+                <li><span className="font-semibold">Assurance Qualité</span> : Chaque produit que nous proposons est soumis à des tests rigoureux pour garantir qu'il respecte nos normes élevées.</li>
+                <li><span className="font-semibold">Service Axé sur le Client</span> : Nous priorisons votre satisfaction et offrons un support amical et compétent pour rendre votre expérience d'achat fluide.</li>
+                <li><span className="font-semibold">Innovation</span> : Notre gamme de produits s'élargit constamment avec les dernières technologies et accessoires, vous permettant de rester à la pointe.</li>
+                <li><span className="font-semibold">Large Sélection</span> : Des gadgets les plus récents aux marques de confiance, nous avons une gamme diversifiée d'électroniques pour s'adapter à tous les styles de vie.</li>
             </ul>
 
-            <h2 className="text-2xl font-semibold text-[#097969] mb-4">Join Us on This Tech Journey</h2>
+            <h2 className="text-2xl font-semibold text-[#097969] mb-4">Rejoignez-Nous dans Cette Aventure Technologique</h2>
             <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                Whether you’re a tech enthusiast or just looking for a reliable accessory, DANTECH has something for everyone. Explore our collection and discover gadgets that are crafted to complement and enhance your daily life.
+                Que vous soyez un passionné de technologie ou simplement à la recherche d'un accessoire fiable, DANTECH a quelque chose pour tout le monde. Explorez notre collection et découvrez des gadgets conçus pour compléter et améliorer votre vie quotidienne.
             </p>
             
             <p className="text-gray-700 text-lg leading-relaxed">
-                Have questions or need assistance? Feel free to reach out to our team at any time – we’re here to help!
+                Vous avez des questions ou besoin d'aide ? N'hésitez pas à contacter notre équipe à tout moment – nous sommes là pour vous aider !
             </p>
         </section>
     );

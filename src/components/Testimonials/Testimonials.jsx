@@ -7,7 +7,6 @@ import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import tik from '../../assets/tik.png';
 
-
 const Testimonials = () => {
     const [review, setReview] = useState([]);
 
@@ -24,36 +23,28 @@ const Testimonials = () => {
         console.log(newRating);
     };
 
-
     return (
         <div className='p-2'>
-
-
-            <h1 className='font-poppin text-3xl uppercase text-center font-bold '>OUR HAPPY CUSTOMERS</h1>
-            <div className='mx-auto max-w-screen-xl h-[350px] flex  items-center -mt-6  mb-20 px-2'>
-
+            <h1 className='font-poppin text-3xl uppercase text-center font-bold'>NOS CLIENTS SATISFAITS</h1>
+            <div className='mx-auto max-w-screen-xl h-[350px] flex items-center -mt-6 mb-20 px-2'>
                 <Swiper
                     spaceBetween={30} 
                     navigation={true} 
                     modules={[Navigation]}
                     className="mySwiper"
                     breakpoints={{
-                       
                         640: {
                             slidesPerView: 1,
                             spaceBetween: 20, 
                         },
-                        
                         768: {
                             slidesPerView: 2,
                             spaceBetween: 10, 
                         },
-                        
                         1024: {
                             slidesPerView: 3, 
                             spaceBetween: 10, 
                         },
-                        
                         1224: {
                             slidesPerView: 3,
                             spaceBetween: 30, 
@@ -63,7 +54,7 @@ const Testimonials = () => {
                     {
                         review.map((r, index) => (
                             <SwiperSlide key={index}>
-                                <div className="p-4 border-2 rounded-lg shadow-xl  border-black bg-white xl:w-[400px] h-[240px] relative">
+                                <div className="p-4 border-2 rounded-lg shadow-xl border-black bg-white xl:w-[400px] h-[240px] relative">
                                     <div className='flex flex-col space-y-3 justify-center p-8'>
                                         <p className="text-2xl">
                                             <ReactStars
@@ -84,7 +75,6 @@ const Testimonials = () => {
                         ))
                     }
                 </Swiper>
-
             </div>
         </div>
     );

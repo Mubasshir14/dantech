@@ -5,14 +5,14 @@ import SideBar from '../SideBar/SideBar';
 const PageDashBoard = () => {
     return (
         <div>
-            <div className='relative min-h-screen md:flex '>
+            <div className="min-h-screen bg-gray-50">
+            <div className="flex">
                 <SideBar />
-                <div className='flex-1 md:ml-64'>
-                    <div className='p-5'>
-                        <Outlet />
-                    </div>
-                </div>
+                <main className="flex-1 p-4 md:p-6">
+                    <Outlet />
+                </main>
             </div>
+        </div>
         </div>
     );
 };

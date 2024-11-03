@@ -31,9 +31,9 @@ const Monitor = () => {
     return (
         <div>
             <div className='my-10 max-w-screen-xl mx-auto'>
-            <h1 className='text-2xl font-bold text-center font-poppin uppercase text-black'>MONITOR</h1>
+            <h1 className='text-2xl font-bold text-center font-poppin uppercase text-black'>ÉCRAN</h1>
                 {/* <h1 className='font-poppin text-3xl uppercase text-center font-bold'>Top Sold</h1> */}
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5'>
                     {topSale.map(p => (
                         <ProductCard p={p} key={p._id} />
                     ))}

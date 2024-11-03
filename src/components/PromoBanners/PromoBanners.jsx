@@ -15,17 +15,16 @@ const PromoBanners = () => {
             {/* Text Content */}
             <div className="w-1/2 space-y-4">
               <h2 className="text-3xl font-bold text-gray-900">
-                Up To 40% Off
+                Jusqu'à 40 % de réduction
               </h2>
               <p className="text-xl text-gray-800">
-                All New Products
+                Tous les nouveaux produits
               </p>
               <Link 
                 to="/shop" 
-                className=" mt-4 text-gray-900 font-medium hover:text-white btn btn-outline hover-bg-[#097969] border-[#097969]"
+                className="mt-4 text-gray-900 font-medium hover:text-white btn btn-outline hover-bg-[#097969] border-[#097969]"
               >
-                Shop Now
-               
+                Magasiner maintenant
               </Link>
             </div>
             
@@ -33,7 +32,7 @@ const PromoBanners = () => {
             <div className="w-1/2 flex justify-end">
               <img 
                 src={img1}
-                alt="Product 1"
+                alt="Produit 1"
                 className="max-w-[180px] md:max-w-[200px] lg:max-w-[220px] transition-transform duration-300 transform group-hover:scale-105 object-contain"
               />
             </div>
@@ -47,17 +46,16 @@ const PromoBanners = () => {
             {/* Text Content */}
             <div className="w-1/2 space-y-4">
               <h2 className="text-3xl font-bold text-gray-900">
-                Free Shipping &
+                Livraison gratuite et
               </h2>
               <p className="text-xl text-gray-800">
-                The Best Items Granted
+                Les meilleurs articles garantis
               </p>
               <Link 
                 to="/shop" 
                 className="hover:text-white btn btn-outline hover-bg-[#097969] border-[#097969]"
               >
-                Shop Now
-                
+                Magasiner maintenant
               </Link>
             </div>
             
@@ -65,7 +63,7 @@ const PromoBanners = () => {
             <div className="w-1/2 flex justify-end">
               <img 
                 src={img2}
-                alt="Product 2"
+                alt="Produit 2"
                 className="max-w-[180px] md:max-w-[200px] lg:max-w-[220px] transition-transform duration-300 transform group-hover:scale-105 object-contain"
               />
             </div>

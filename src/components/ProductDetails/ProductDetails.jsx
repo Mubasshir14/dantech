@@ -23,7 +23,7 @@ const modalStyles = {
         transform: 'translate(-50%, -50%)',
         width: '80%',
         maxWidth: '500px',
-        backgroundColor: '#59C6D2',
+        backgroundColor: '#097969',
         color: 'black',
         padding: '20px',
         borderRadius: '8px',
@@ -44,6 +44,19 @@ const ProductDetails = () => {
     const [, refetch] = useCart();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [reviews, refetchReviews] = useReview();
+
+    const categoryTranslations = {
+        "earbuds": "Écouteurs",
+        "smartwatch": "Montre intelligente",
+        "cover": "Étui",
+        "earphone": "Oreillette",
+        "adapter": "Adaptateur",
+        "powerbank": "Batterie externe",
+        "speaker": "Haut-parleurs",
+        "microphone": "Microphone",
+        "monitor": "Moniteur",
+        "camera": "Caméra"
+    };
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -95,14 +108,14 @@ const ProductDetails = () => {
                 image: product.images[0],
                 quantity,
             };
-
+    
             axios.post('https://dantech-server.onrender.com/carts', cartItem)
                 .then(res => {
                     if (res.data.insertedId) {
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
-                            title: `${product.name} Added To The Cart`,
+                            title: `${product.name} ajouté au panier`,
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -110,22 +123,22 @@ const ProductDetails = () => {
                     }
                 })
                 .catch(error => {
-                    console.error('Error adding to cart:', error);
+                    console.error('Erreur lors de l\'ajout au panier :', error);
                     Swal.fire({
                         icon: 'error',
-                        title: 'Oops...',
-                        text: 'Failed to add item to cart. Please try again.',
+                        title: 'Oups...',
+                        text: 'Échec de l\'ajout de l\'article au panier. Veuillez réessayer.',
                     });
                 });
         } else {
             Swal.fire({
-                title: "You are not Logged In",
-                text: "Please login to add items to the cart.",
+                title: "Vous n'êtes pas connecté",
+                text: "Veuillez vous connecter pour ajouter des articles au panier.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Login!"
+                confirmButtonText: "Oui, connectez-vous !"
             }).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/login', { state: { from: location } });
@@ -133,6 +146,7 @@ const ProductDetails = () => {
             });
         }
     };
+    
 
     const handleAddToWishlist = () => {
         if (user && user.email) {
@@ -143,36 +157,36 @@ const ProductDetails = () => {
                 price: product.price,
                 image: product.images[0],
             };
-
+    
             axios.post('https://dantech-server.onrender.com/wishlist', wishlistItem)
                 .then(res => {
                     if (res.data.insertedId) {
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
-                            title: `${product.name} Added To The Wishlist`,
+                            title: `${product.name} ajouté à la liste de souhaits`,
                             showConfirmButton: false,
                             timer: 1500
                         });
                     }
                 })
                 .catch(error => {
-                    console.error('Error adding to wishlist:', error);
+                    console.error('Erreur lors de l\'ajout à la liste de souhaits :', error);
                     Swal.fire({
                         icon: 'error',
-                        title: 'Oops...',
-                        text: 'Failed to add item to wishlist. Please try again.',
+                        title: 'Oups...',
+                        text: 'Échec de l\'ajout de l\'article à la liste de souhaits. Veuillez réessayer.',
                     });
                 });
         } else {
             Swal.fire({
-                title: "You are not Logged In",
-                text: "Please login to add items to the wishlist.",
+                title: "Vous n'êtes pas connecté",
+                text: "Veuillez vous connecter pour ajouter des articles à la liste de souhaits.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, Login!"
+                confirmButtonText: "Oui, connectez-vous !"
             }).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/login', { state: { from: location } });
@@ -180,16 +194,17 @@ const ProductDetails = () => {
             });
         }
     };
+    
 
     return (
-       <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
             {/* Back Button */}
             <button
                 onClick={() => navigate(-1)}
                 className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
             >
                 <ArrowLeft className="w-4 h-4" />
-                Back to Products
+                Fermer
             </button>
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -199,7 +214,7 @@ const ProductDetails = () => {
                         <img
                             src={product?.images[selectedImage]}
                             alt={product?.name}
-                            className="w-full h-96 md:h-[450px] object-cover object-center"
+                            className="w-full h-96 md:h-[450px] xl:h-[500px] object-cover object-center"
                         />
                     </div>
 
@@ -215,7 +230,7 @@ const ProductDetails = () => {
                                 <img
                                     src={img}
                                     alt={`thumbnail-${index}`}
-                                    className="w-full h-20 object-cover"
+                                    className="w-full h-20 xl:h-28 object-cover"
                                 />
                             </div>
                         ))}
@@ -226,9 +241,9 @@ const ProductDetails = () => {
                 <div className="space-y-6">
                     <div>
                         <span className="inline-block px-3 py-1 text-sm font-medium text-[#097969] bg-[#097969]/10 rounded-full mb-2 font-poppin uppercase">
-                            {product?.category}
+                        {categoryTranslations[product?.category] || product?.category}
                         </span>
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{product?.name}</h1>
+                        <h1 className="lg:text-3xl text-xl font-bold text-gray-900 mb-2">{product?.name}</h1>
                         <p className="text-gray-600 text-justify">{product?.details}</p>
                     </div>
 
@@ -241,7 +256,7 @@ const ProductDetails = () => {
 
                     {/* Quantity Selector */}
                     <div className="flex items-center space-x-4">
-                        <span className="text-gray-700">Quantity:</span>
+                    <span className="text-gray-700">Quantité :</span>
                         <div className="flex items-center border rounded-lg">
                             <button
                                 onClick={() => handleQuantityChange('decrement')}
@@ -267,14 +282,14 @@ const ProductDetails = () => {
                             className="flex-1 bg-[#097969] hover:bg-[#097969] text-white py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
                         >
                             <ShoppingCart className="w-4 h-4" />
-                            Add to Cart
+                            Ajouter au panier
                         </button>
                         <button
                             onClick={handleAddToWishlist}
                             className="px-6 py-3 border border-[#097969] rounded-lg flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors text-[#097969] btn"
                         >
                             <Heart className="w-4 h-4 text-[#097969]" />
-                            Wishlist
+                            Liste de souhaits
                         </button>
                     </div>
                 </div>
@@ -287,45 +302,46 @@ const ProductDetails = () => {
                 style={modalStyles}
                 contentLabel="Review Modal"
             >
-                <h2 className="text-xl font-bold mb-4 text-center">Submit Your Review</h2>
+                <h2 className="text-xl font-bold mb-4 text-center text-white">Soumettez votre avis</h2>
+
                 <SubmitReview user={user}
                     productName={product.name} onReviewSubmitted={handleReviewSubmitted} />
                 <div className='flex justify-end'>
                     <button
                         onClick={closeModal}
-                        className="mt-4 py-2 px-4 rounded border border-gray-300"
+                        className="mt-4 py-2 px-4 rounded border text-white border-gray-300"
                     >
-                        Close
+                       Fermer
                     </button>
                 </div>
             </Modal>
 
-            <div className='flex items-center justify-center  mt-10'>
+            <div className='flex items-center justify-center mt-10'>
                 <Tabs>
                     <TabList className="flex justify-center border-gray-300">
                         <Tab
                             onClick={() => setActiveTab('product-details')}
                             className={`py-2 px-4 text-lg font-semibold cursor-pointer 
-          ${activeTab === 'product-details' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
-          focus:outline-none`}
+                ${activeTab === 'product-details' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
+                focus:outline-none`}
                         >
-                            Product Details
+                            Détails du produit
                         </Tab>
                         <Tab
                             onClick={() => setActiveTab('reviews')}
                             className={`py-2 px-4 text-lg font-semibold cursor-pointer 
-          ${activeTab === 'reviews' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
-          focus:outline-none`}
+                ${activeTab === 'reviews' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
+                focus:outline-none`}
                         >
-                            Reviews
+                            Avis
                         </Tab>
                         <Tab
                             onClick={() => setActiveTab('faq')}
                             className={`py-2 px-4 text-lg font-semibold cursor-pointer 
-          ${activeTab === 'faq' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
-          focus:outline-none`}
+                ${activeTab === 'faq' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
+                focus:outline-none`}
                         >
-                            FAQ
+                            FAQ (Questions Fréquemment Posées)
                         </Tab>
                     </TabList>
 
@@ -336,11 +352,10 @@ const ProductDetails = () => {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3'>
                             {productReview.map((review, index) => (
                                 <div key={index} className="p-6 border-2 rounded-lg shadow-xl border-black bg-white transition-transform transform hover:scale-105">
                                     <div className="flex items-center mb-4">
-
                                         <StarRatings
                                             rating={review.rating}
                                             starRatedColor="gold"
@@ -364,42 +379,40 @@ const ProductDetails = () => {
                                 onClick={openModal}
                                 className='border-2 border-black text-black px-4 py-2 rounded-lg mt-2'
                             >
-                                Add Review
+                                Ajouter un avis
                             </button>
                         </div>
-
                     </TabPanel>
                     <TabPanel>
                         <section className="">
-                            <div className="container flex flex-col justify-center p-4 mx-auto md:p-8">
-                                <p className="p-2 text-sm font-medium tracking-wider text-center uppercase">How it works</p>
-                                <h2 className="mb-12 text-4xl font-bold leading-none text-center sm:text-5xl">Frequently Asked Questions</h2>
+                            <div className="container flex flex-col justify-center text-justify p-4 mx-auto md:p-8">
+                                <h2 className="mb-12 text-4xl font-bold leading-none text-center sm:text-5xl">Questions Fréquemment Posées</h2>
                                 <div className="grid gap-10 md:gap-8 sm:p-3 md:grid-cols-2 lg:px-12 xl:px-32">
                                     <div>
-                                        <h3 className="font-semibold">What payment methods do you accept?</h3>
-                                        <p className="mt-1 ">We accept a variety of payment methods, including credit/debit cards, PayPal, and major digital wallets. You can also use store credit or promotional codes during checkout.</p>
+                                        <h3 className="font-semibold">Quels modes de paiement acceptez-vous ?</h3>
+                                        <p className="mt-1 text-justify">Nous acceptons divers modes de paiement, y compris les cartes de crédit/débit, PayPal et les principaux portefeuilles numériques. Vous pouvez également utiliser un crédit magasin ou des codes promotionnels lors du paiement.</p>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold">How long does shipping take?</h3>
-                                        <p className="mt-1 ">Shipping times depend on your location. Domestic orders usually arrive within 3-5 business days, while international orders may take 7-14 business days. Expedited shipping options are also available at checkout.</p>
+                                        <h3 className="font-semibold">Combien de temps prend la livraison ?</h3>
+                                        <p className="mt-1 text-justify">Les délais de livraison dépendent de votre emplacement. Les commandes nationales arrivent généralement dans un délai de 3 à 5 jours ouvrables, tandis que les commandes internationales peuvent prendre 7 à 14 jours ouvrables. Des options de livraison accélérée sont également disponibles lors du paiement.</p>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold">Can I return or exchange an item?</h3>
-                                        <p className="mt-1 ">Yes, we have a 30-day return policy. If you're not satisfied with your purchase, you can return or exchange it within 30 days of receiving the item, as long as it’s in its original condition. Check our return policy page for more details.</p>
+                                        <h3 className="font-semibold">Puis-je retourner ou échanger un article ?</h3>
+                                        <p className="mt-1 text-justify">Oui, nous avons une politique de retour de 30 jours. Si vous n'êtes pas satisfait de votre achat, vous pouvez le retourner ou l'échanger dans les 30 jours suivant la réception de l'article, tant qu'il est en bon état. Consultez notre page de politique de retour pour plus de détails.</p>
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold">How can I track my order?</h3>
-                                        <p className="mt-1 ">Once your order is shipped, you will receive a tracking number via email. You can use this number to track your order through our website or the carrier’s site. If you have any issues, feel free to contact our support team.</p>
+                                        <h3 className="font-semibold">Comment puis-je suivre ma commande ?</h3>
+                                        <p className="mt-1 text-justify">Une fois votre commande expédiée, vous recevrez un numéro de suivi par e-mail. Vous pouvez utiliser ce numéro pour suivre votre commande sur notre site web ou celui du transporteur. Si vous avez des problèmes, n'hésitez pas à contacter notre équipe d'assistance.</p>
                                     </div>
                                 </div>
                             </div>
                         </section>
-
                     </TabPanel>
                 </Tabs>
             </div>
-            <NewsLetter/>
-        </div> 
+
+            <NewsLetter />
+        </div>
     );
 };
 

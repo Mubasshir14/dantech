@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import Dashboard from '../Dashboard';
 import Loader from '../../Loader/Loader';
 
-
 const ManageProduct = () => {
     const [arrival, setArrival] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -19,38 +18,38 @@ const ManageProduct = () => {
                 setLoading(false);
             })
             .catch((error) => {
-                console.error("Error fetching products:", error);
+                console.error("Erreur lors de la récupération des produits :", error);
                 setLoading(false);
             });
     }, []);
 
-    // Function to delete an product
+    // Fonction pour supprimer un produit
     const handleDelete = (id) => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Êtes-vous sûr ?',
+            text: "Vous ne pourrez pas revenir en arrière !",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
+            confirmButtonText: 'Oui, supprimez-le !'
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`https://dantech-server.onrender.com/product/${id}`)
                     .then(() => {
-                        // Remove the deleted item from the state
+                        // Supprimer l'élément supprimé de l'état
                         setArrival((prevArrival) => prevArrival.filter(item => item._id !== id));
                         Swal.fire(
-                            'Deleted!',
-                            'Your product has been deleted.',
+                            'Supprimé !',
+                            'Votre produit a été supprimé.',
                             'success'
                         );
                     })
                     .catch((error) => {
-                        console.error("Error deleting product:", error);
+                        console.error("Erreur lors de la suppression du produit :", error);
                         Swal.fire(
-                            'Error!',
-                            'There was an issue deleting the product.',
+                            'Erreur !',
+                            'Il y a eu un problème lors de la suppression du produit.',
                             'error'
                         );
                     });
@@ -62,30 +61,34 @@ const ManageProduct = () => {
 
     return (
         <div className='mb-6'>
-            <Dashboard/>
+            <Dashboard />
             <div className='max-w-screen-xl mx-auto -mt-20 md:-mt-28'>
                 <div>
-                    <div className="text-black  font-bold text-xl md:text-2xl font-poppin uppercase text-center mb-8">Manage Products</div>
+                    <div className="text-black font-bold text-xl md:text-2xl font-poppin uppercase text-center mb-8">Gérer les Produits</div>
                     <div className="max-w-4xl mx-auto shadow-md bg-white border border-gray-200">
                         <div className="p-6">
                             <div className="flex flex-col md:flex-row justify-between mb-6 items-center">
-                                <div className="md:text-3xl text-xl font-semibold  mb-4 md:mb-0">
-                                    Total Products: {arrival.length}
+                                <div className="md:text-3xl text-xl font-semibold mb-4 md:mb-0">
+                                    Total des Produits : {arrival.length}
                                 </div>
-                                <div className="md:text-3xl text-xl font-semibold  mb-4 md:mb-0">
-                                    {/* Total price: Tk.{totalPrice.toFixed(2)} */}
+                                {/* <div className="md:text-3xl text-xl font-semibold mb-4 md:mb-0">
+                                    Total des Produits : {arrival.length.toLocaleString('fr-FR')}
+                                </div> */}
+
+                                <div className="md:text-3xl text-xl font-semibold mb-4 md:mb-0">
+                                    {/* Prix total : Tk.{totalPrice.toFixed(2)} */}
                                 </div>
                             </div>
                             <div className="overflow-x-auto">
                                 <table className="min-w-full bg-white border">
                                     <thead>
-                                        <tr className="bg-[#097969]  text-white">
+                                        <tr className="bg-[#097969] text-white">
                                             <td className="py-2 px-4 uppercase font-bold">#</td>
                                             <td className="py-2 px-4 uppercase font-bold">Image</td>
-                                            <td className="py-2 px-4 uppercase font-bold">Name</td>
-                                            <td className="py-2 px-4 uppercase font-bold">Price</td>
-                                            <td className="py-2 px-4 uppercase font-bold">Category</td>
-                                            <td className="py-2 px-4 uppercase font-bold">Sub Category</td>
+                                            <td className="py-2 px-4 uppercase font-bold">Nom</td>
+                                            <td className="py-2 px-4 uppercase font-bold">Prix</td>
+                                            <td className="py-2 px-4 uppercase font-bold">Catégorie</td>
+                                            <td className="py-2 px-4 uppercase font-bold">Sous Catégorie</td>
                                             <td className="py-2 px-4 uppercase font-bold">Action</td>
                                         </tr>
                                     </thead>
@@ -101,7 +104,7 @@ const ManageProduct = () => {
                                                 <td className="py-2 px-4 text-[#737373] uppercase">{product.category}</td>
                                                 <td className="py-2 px-4 text-[#737373] uppercase">{product.subcategory}</td>
                                                 <td className="py-2 px-4 flex space-x-2">
-                                                    <Link to={`/update/${product._id}`} className="bg-[#097969]  text-white px-2 py-2 rounded btn">
+                                                    <Link to={`/update/${product._id}`} className="bg-[#097969] text-white px-2 py-2 rounded btn">
                                                         <MdOutlineModeEditOutline />
                                                     </Link>
                                                     <button

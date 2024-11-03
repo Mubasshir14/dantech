@@ -29,7 +29,8 @@ function App() {
     <div>
       <NavBar />
       <Outlet />
-      {!noFooter && <Footer />}
+      {/* {!noFooter && <Footer />} */}
+      <Footer/>
     </div>
   )
 }

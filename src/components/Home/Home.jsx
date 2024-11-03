@@ -16,7 +16,9 @@ const Home = () => {
             <Collection/>
             <TabProduct/>
             <PromoBanners2/>
-            <Product/>
+           <div className='px-2'>
+           <Product/>
+           </div>
             <PromoBanners/>
             <TopSold/>
             <Testimonials/>

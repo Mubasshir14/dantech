@@ -1,46 +1,43 @@
-import { useContext, useEffect, useState } from 'react'
-import { GrLogout } from 'react-icons/gr'
-import { FcSettings } from 'react-icons/fc'
-import { AiOutlineBars } from 'react-icons/ai'
-import { BsFillHouseAddFill, BsGraphUp } from 'react-icons/bs'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { MdBookmark, MdHomeWork, MdPeople, MdQuestionAnswer, MdSearch } from 'react-icons/md'
-import { FaLayerGroup, FaRocketchat, FaTasks } from 'react-icons/fa'
-import { CgProfile } from 'react-icons/cg'
-
-import { IoNewspaper } from 'react-icons/io5'
-import axios from 'axios'
-import { AuthContext } from '../provider/AuthProvider'
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
+import {
+    Search,
+    ShoppingBag,
+    Watch,
+    Headphones,
+    Smartphone,
+    Battery,
+    Mic,
+    Monitor,
+    Speaker,
+    Camera,
+    ChevronRight,
+    User,
+    LogOut,
+    Menu
+} from 'lucide-react';
+import img from '../../assets/photo.jpg'
 
 const SideBar = () => {
-    const { user, logOut } = useContext(AuthContext)
-    const [isActive, setActive] = useState(false)
+    const { user, logOut } = useContext(AuthContext);
+    const [isActive, setActive] = useState(true);
     const [products, setProducts] = useState([]);
-    // const [isAdmin, setIsAdmin] = useState(false);
-    const [loading, setLoading] = useState(true);
-    // const [users, setUsers] = useState([]);
     const navigate = useNavigate();
-
-
 
     const handleLogOut = () => {
         logOut()
             .then(() => {
-
+                navigate('/');
             })
-        navigate('/')
             .catch(error => {
                 console.log(error.message);
             });
     };
 
     const handleToggle = () => {
-        setActive(!isActive)
-    }
-
-
-
+        setActive(!isActive);
+    };
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -55,268 +52,188 @@ const SideBar = () => {
         fetchProducts();
     }, []);
 
+    const translations = {
+        "écouteurs": "earbuds",
+        "montre intelligente": "smartwatch",
+        "étui": "cover",
+        "oreillette": "earphone",
+        "adaptateur": "adapter",
+        "batterie externe": "powerbank",
+        "haut-parleurs": "speaker",
+        "microphone": "microphone",
+        "moniteur": "monitor",
+        "caméra": "camera",
+        "offre flash": "flashdeal",
+        "nouvelle arrivée": "newarrival",
+        "meilleure vente": "topsale",
+        "aucune": "blank"
+    };
+
+    const translateSearchTerm = (text) => {
+        const lowerText = text.toLowerCase();
+        // Check if the text matches any French key in translations
+        for (const [french, english] of Object.entries(translations)) {
+            if (lowerText.includes(french.toLowerCase())) {
+                // Replace the French term with its English equivalent
+                return lowerText.replace(french.toLowerCase(), english);
+            }
+        }
+        return lowerText;
+    };
+
     const handleSearch = (e) => {
         e.preventDefault();
         const form = e.target;
-        const text = form.text.value.toLowerCase();
+        const originalText = form.text.value.toLowerCase();
+        const translatedText = translateSearchTerm(originalText);
+
         const filteredProducts = products.filter(product =>
-            product.name.toLowerCase().includes(text) ||
-            product.category.toLowerCase().includes(text) ||
-            product.subcategory.toLowerCase().includes(text)
+            product.name.toLowerCase().includes(translatedText) ||
+            product.category.toLowerCase().includes(translatedText) ||
+            product.subcategory.toLowerCase().includes(translatedText)
         );
 
         navigate('/search', { state: { results: filteredProducts } });
         form.reset();
     };
-    return (
-        <div className='md:mt-10'>
-            {/* Small Screen Navbar */}
-            <div className='bg-gray-100 mt-8 md:mt-0 text-gray-900 flex justify-between md:hidden'>
-                <div>
-                    <div className=' cursor-pointer p-4 font-bold'>
-                        <Link to='/'>
-                            <h1 className='font-poppin uppercase font-bold'>DANTECH</h1>
-                        </Link>
-                    </div>
-                </div>
 
-                <button
-                    onClick={handleToggle}
-                    className='mobile-menu-button p-4 focus:outline-none focus:bg-gray-200'
-                >
-                    <AiOutlineBars className='h-5 w-5' />
-                </button>
-            </div>
+    const categories = [
+        { path: '/shop', name: 'Tous les produits', icon: <ShoppingBag className="w-4 h-4" /> },
+        { path: '/earbud', name: 'Écouteurs', icon: <Headphones className="w-4 h-4" /> },
+        { path: '/smartwatch', name: 'Montre connectée', icon: <Watch className="w-4 h-4" /> },
+        { path: '/cover', name: 'Housse', icon: <Smartphone className="w-4 h-4" /> },
+        { path: '/earphone', name: 'Écouteur', icon: <Headphones className="w-4 h-4" /> },
+        { path: '/adapter', name: 'Adaptateur', icon: <Battery className="w-4 h-4" /> },
+        { path: '/powerbank', name: 'Batterie externe', icon: <Battery className="w-4 h-4" /> },
+        { path: '/microphone', name: 'Microphone', icon: <Mic className="w-4 h-4" /> },
+        { path: '/monitor', name: 'Moniteur', icon: <Monitor className="w-4 h-4" /> },
+        { path: '/speaker', name: 'Haut-parleur', icon: <Speaker className="w-4 h-4" /> },
+        { path: '/camera', name: 'Appareil photo', icon: <Camera className="w-4 h-4" /> },
+    ];
+
+    return (
+        <div className="relative my-3">
+            {/* Mobile Toggle Button */}
+            <button
+                onClick={handleToggle}
+                className="md:hidden flex top-4 left-4 z-50 p-2 bg-white rounded-lg shadow-lg hover:bg-gray-100"
+            >
+                <Menu className="w-5 h-5" />
+            </button>
 
             {/* Sidebar */}
-            <div
-                className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-[#238e61] md:bg-green-200/10 w-64 space-y-6 px-2 py-4 mt-20 rounded-t-lg absolute inset-y-0 left-0 transform ${isActive && '-translate-x-full'
-                    }  md:translate-x-0  transition duration-200 ease-in-out`}
+            <aside
+                className={` 
+                    fixed md:sticky top-0 left-0 h-screen 
+                    w-60 md:w-56 lg:w-64 
+                    bg-white  shadow-lg 
+                    transition-transform duration-300 ease-in-out
+                    ${isActive ? '-translate-x-full md:translate-x-0' : 'translate-x-0'}
+                    z-40 flex flex-col
+                `}
             >
-                <div>
-                    <div>
-                        <div className='w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center bg-green-950 mx-auto  '>
-                            <Link to='/'>
-                                <h1 className='font-poppin uppercase text-white font-bold'>DANTECH</h1>
-                            </Link>
+                {/* Logo */}
+                <div className="h-16 flex items-center justify-center border-b shrink-0">
+                    <Link to="/" className="text-xl font-bold text-emerald-700 font-poppin">
+                        <img src={img} className='h-[32px]' alt="" />
+                    </Link>
+                </div>
+
+                {/* Main Content Wrapper */}
+                <div className="flex flex-col flex-grow overflow-hidden">
+                    {/* Search */}
+                    <div className="p-3 border-b shrink-0">
+                        <form onSubmit={handleSearch} className="relative">
+                            <input
+                                type="text"
+                                name="text"
+                                placeholder="Rechercher..."
+                                className="w-full px-3 py-1.5 text-sm rounded-lg border focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                            />
+                            <button type="submit" className="absolute right-2 top-1.5">
+                                <Search className="w-4 h-4 text-gray-400" />
+                            </button>
+                        </form>
+                    </div>
+
+                    {/* Categories - Scrollable */}
+                    <div className="flex-grow overflow-y-auto">
+                        <div className="p-3">
+                            <div className="space-y-0.5">
+                                {categories.map((category) => (
+                                    <NavLink
+                                        key={category.path}
+                                        to={category.path}
+                                        onClick={() => window.innerWidth < 768 && setActive(true)}
+                                        className={({ isActive }) =>
+                                            `flex items-center px-3 py-2 text-sm rounded-lg transition-colors ${
+                                                isActive
+                                                    ? 'bg-[#097969]/20 text-[#097969]'
+                                                    : 'text-gray-700 hover:bg-gray-50'
+                                            }`
+                                        }
+                                    >
+                                        {category.icon}
+                                        <span className="ml-2 lg:text-lg uppercase font-poppin">{category.name}</span>
+                                    </NavLink>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
-
-                    <div className='flex flex-col justify-between flex-1 mt-6 text-white'>
-
-
-
-                        <nav>
-                            <form
-                                onSubmit={handleSearch}
-                                className={`flex font-poppins uppercase items-center px-4 py-2 my-5 border-2 shadow-lg text-black transform border-white/10 hover:bg-gray-300 hover:text-gray-700`}>
-                                <MdSearch className='w-5 h-5 text-black' />
-                                <input
-                                    type="text"
-                                    name="text"
-                                    placeholder="Search Product"
-                                    style={{ fontFamily: 'Cinzel' }}
-                                    className="input bg-transparent border-b-2 border-b-black rounded-none w-full max-w-xs"
-                                />
-                            </form>
-                            <NavLink
-                                to='/shop'
-                                end
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-                                {/*  */}
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>All Products</span>
-                            </NavLink>
-
-
-                            <NavLink
-                                to='/earbud'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>EARBUDS</span>
-                            </NavLink>
-
-                            <NavLink
-                                to='/smartwatch'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>Smartwatch</span>
-                            </NavLink>
-
-                            <NavLink
-                                to='/cover'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>cover</span>
-                            </NavLink>
-
-                            <NavLink
-                                to='/earphone'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>Earphone</span>
-                            </NavLink>
-                            <NavLink
-                                to='/adapter'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>adapter</span>
-                            </NavLink>
-                            <NavLink
-                                to='/powerbank'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>powerbank</span>
-                            </NavLink>
-                            <NavLink
-                                to='/microphone'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>microphone</span>
-                            </NavLink>
-                            <NavLink
-                                to='/monitor'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>monitor</span>
-                            </NavLink>
-                            <NavLink
-                                to='/speaker'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>speaker</span>
-                            </NavLink>
-                            <NavLink
-                                to='/camera'
-                                className={({ isActive }) =>
-                                    `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                                    }`
-                                }
-                            >
-
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>camera</span>
-                            </NavLink>
-
-
-                        </nav>
-                    </div>
-
-                </div>
-
-                <div>
-                    <hr className='border-[#097969]' />
-
-                    {/* Profile Menu */}
-                    <div
-
-                        className={({ isActive }) =>
-                            `flex  items-center px-4 py-2 my-5  transition-colors duration-300 transform  hover:bg-gray-300 border-2 border-white/10 shadow-lg   hover:text-gray-700 ${isActive ? 'bg-gray-300  text-gray-700' : 'text-black'
-                            }`
-                        }
-                    >
-
-                    </div>
-                    <NavLink
-                        to='/profile'
-                        className={({ isActive }) =>
-                            `flex items-center uppercase font-poppin rounded-lg shadow-xl  px-4 py-2 my-5 shadow-black/40  transition-colors duration-300 border-2 border-white/10 transform  hover:bg-[#097969]/70   hover:text-white ${isActive ? 'bg-[#097969] shadow-[#097969]/30   text-white' : 'text-black'
-                            }`
-                        }
-                    >
-
-                        {
-                            user ? <img
-                                className="object-cover w-5 h-5 rounded-full ring ring-gray-300 dark:ring-gray-600"
-                                src={user?.photoURL}
-
-                                title={user?.displayName || "Profile"}
-                                alt="Profile image"
-                            /> :
-                                <Link to='login'><CgProfile className='w-5 h-5 text-black' /></Link>
-                        }
-
-                        <span className='mx-4 font-poppins uppercase font-medium'>Profile</span>
-                    </NavLink>
-
-                    <Link
-                        to='/login'
-                        className='flex w-full items-center px-4 py-2 mt-5 text-black   hover:bg-gray-300 border-2 border-white/10 shadow-xl shadow-black/40 hover:bg-[#097969]/70 transition-colors duration-300 transform'
-                    >
-                        {
-                            user ? <button
-                                onClick={handleLogOut}
-                                className='flex w-full items-center px-4 py-2 mt-5 text-black border-2 border-white/10 shadow-xl shadow-black/40 hover:bg-[#097969]/70   hover:text-white rounded-lg      transition-colors duration-300 transform'
-                            >
-                                <GrLogout className='w-5 h-5' />
-
-                                <span className='mx-4 font-poppins uppercase font-medium'>Logout</span>
-                            </button> :
-                                <Link
-                                    to='/login'
-                                    className='flex w-full items-center px-4 py-2 mt-5 text-black   hover:bg-gray-300 border-2 border-white/10 shadow-xl shadow-black/40 hover:bg-[#097969]/70 transition-colors duration-300 transform'
+                    {/* User Section */}
+                    <div className="p-3 border-t bg-white shrink-0">
+                        {user ? (
+                            <div className="space-y-1">
+                                <NavLink
+                                    to="/profile"
+                                    onClick={() => window.innerWidth < 768 && setActive(true)}
+                                    className={({ isActive }) =>
+                                        `flex items-center px-3 py-2 text-sm rounded-lg ${
+                                            isActive
+                                                ? 'bg-emerald-50 text-[]'
+                                                : 'text-gray-700 hover:bg-gray-50'
+                                        }`
+                                    }
                                 >
-                                    <GrLogout className='w-5 h-5' />
-
-                                    <span className='mx-4 font-poppins uppercase font-medium'>Login</span>
-                                </Link>
-                        }
-                    </Link>
-
+                                    {user.photoURL ? (
+                                        <img src={user.photoURL} alt="Profile" className="w-6 h-6 rounded-full" />
+                                    ) : (
+                                        <User className="w-4 h-4" />
+                                    )}
+                                    <span className="ml-2 text-sm lg:text-lg uppercase font-poppin">Profil</span>
+                                </NavLink>
+                                <button
+                                    onClick={handleLogOut}
+                                    className="flex items-center w-full px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-50"
+                                >
+                                    <LogOut className="w-4 h-4" />
+                                    <span className="ml-2 text-sm lg:text-lg uppercase font-poppin">Déconnexion</span>
+                                </button>
+                            </div>
+                        ) : (
+                            <Link
+                                to="/login"
+                                onClick={() => window.innerWidth < 768 && setActive(true)}
+                                className="flex items-center px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-50"
+                            >
+                                <LogOut className="w-4 h-4" />
+                                <span className="ml-2 text-sm lg:text-lg uppercase font-poppin">Connexion</span>
+                            </Link>
+                        )}
+                    </div>
                 </div>
-            </div>
-        </div>
-    )
-}
+            </aside>
 
-export default SideBar
+            {/* Overlay for mobile */}
+            {!isActive && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                    onClick={handleToggle}
+                />
+            )}
+        </div>
+    );
+};
+
+export default SideBar;

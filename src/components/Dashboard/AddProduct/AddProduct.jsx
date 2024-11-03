@@ -31,7 +31,7 @@ const AddProduct = () => {
     const removeImage = (index) => {
         setSelectedImages(prev => prev.filter((_, i) => i !== index));
         setPreviewUrls(prev => {
-            // Revoke the URL to prevent memory leaks
+
             URL.revokeObjectURL(prev[index]);
             return prev.filter((_, i) => i !== index);
         });
@@ -59,7 +59,7 @@ const AddProduct = () => {
             if (selectedImages.length === 0) {
                 Swal.fire({
                     icon: "error",
-                    title: "Please select at least one image",
+                    title: "Veuillez sélectionner au moins une image.",
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -95,7 +95,7 @@ const AddProduct = () => {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `${data.name} is added to the Product Collection.`,
+                    title: `${data.name} a été ajouté à la collection de produits.`,
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -107,7 +107,7 @@ const AddProduct = () => {
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "An error occurred. Please try again.",
+                title: "Une erreur s'est produite. Veuillez réessayer",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -118,23 +118,23 @@ const AddProduct = () => {
 
     return (
         <div>
-            <Dashboard/>
-            <h1 className='font-poppin text-2xl md:text-3xl uppercase font-extrabold text-center -mt-20 '>ADD PRODUCT</h1>
+            <Dashboard />
+            <h1 className='font-poppin text-2xl md:text-3xl uppercase font-extrabold text-center -mt-20 '>AJOUTER UN PRODUIT</h1>
             <div className="flex items-center  justify-center md:mb-20 p-2">
 
                 <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded shadow-md w-full max-w-lg mt-6 border-2 border-black">
                     {/* Product Name */}
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Product Name*</span>
+                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Nom du produit*</span>
                         </div>
                         <input
                             {...register("name", {
-                                required: "Product Name is required",
-                                minLength: { value: 3, message: "Name must be at least 3 characters" }
+                                required: "Le nom du produit est requis",
+                                minLength: { value: 3, message: "Le nom doit comporter au moins 3 caractères" }
                             })}
                             type="text"
-                            placeholder="Product Name"
+                            placeholder="Nom du produit"
                             className="input input-bordered w-full"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
@@ -144,26 +144,27 @@ const AddProduct = () => {
                         {/* Category Selection */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Category*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Catégorie*</span>
                             </div>
                             <select
                                 defaultValue="default"
                                 {...register("category", {
-                                    required: "Category is required"
+                                    required: "La catégorie est requise"
                                 })}
                                 className="select select-bordered w-full font-bold uppercase font-poppin"
                             >
-                                <option disabled value='default'>Select category</option>
-                                <option value="earbuds">Earbuds</option>
-                                <option value="smartwatch">Smartwatch</option>
-                                <option value="cover">Cover</option>
-                                <option value="earphone">Earphone</option>
-                                <option value="adapter">Adapter</option>
-                                <option value="powerbank">Powerbank</option>
-                                <option value="speaker">Speakers</option>
+                                <option disabled value='default'>Sélectionner une catégorie</option>
+                                <option value="earbuds">Écouteurs</option>
+                                <option value="smartwatch">Montre intelligente</option>
+                                <option value="cover">Étui</option>
+                                <option value="earphone">Oreillette</option>
+                                <option value="adapter">Adaptateur</option>
+                                <option value="powerbank">Batterie externe</option>
+                                <option value="speaker">Haut-parleurs</option>
                                 <option value="microphone">Microphone</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="camera">Camera</option>
+                                <option value="monitor">Moniteur</option>
+                                <option value="camera">Caméra</option>
+
                             </select>
                             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
                         </label>
@@ -171,20 +172,21 @@ const AddProduct = () => {
                         {/* Sub Category Selection */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Sub Category*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Sous-catégorie*</span>
                             </div>
                             <select
                                 defaultValue="default"
                                 {...register("subcategory", {
-                                    required: "Subcategory is required"
+                                    required: "La sous-catégorie est requise."
                                 })}
                                 className="select select-bordered w-full font-bold uppercase font-poppin"
                             >
-                                <option disabled value='default'>Select subcategory</option>
-                                <option value="flashdeal">Flash Deal</option>
-                                <option value="newarrival">New Arrival</option>
-                                <option value="topsale">Top Sale</option>
-                                <option value="blank">None</option>
+                                <option disabled value='default'>Sélectionner une sous-catégorie</option>
+                                <option value="flashdeal">Offre Flash</option>
+                                <option value="newarrival">Nouvelle Arrivée</option>
+                                <option value="topsale">Meilleure Vente</option>
+                                <option value="blank">Aucune</option>
+
                             </select>
                             {errors.subcategory && <p className="text-red-500 text-sm mt-1">{errors.subcategory.message}</p>}
                         </label>
@@ -194,16 +196,16 @@ const AddProduct = () => {
                         {/* Selling Price */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Selling Price*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Prix de vente*</span>
                             </div>
                             <input
                                 {...register("sellingPrice", {
-                                    required: "Selling Price is required",
-                                    min: { message: "Price cannot be negative" },
+                                    required: "Le prix de vente est requis.",
+                                    min: { message: "Le prix ne peut pas être négatif." },
                                     valueAsNumber: true
                                 })}
                                 type="number"
-                                placeholder="Selling Price"
+                                placeholder="Prix de vente"
                                 className="input input-bordered w-full"
                             />
                             {errors.sellingPrice && <p className="text-red-500 text-sm mt-1">{errors.sellingPrice.message}</p>}
@@ -212,52 +214,56 @@ const AddProduct = () => {
                         {/* Delete Price */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Delete Price*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Prix de suppression*</span>
                             </div>
                             <input
                                 {...register("deletePrice", {
-                                    required: "Delete Price is required",
-                                    min: { message: "Price cannot be negative" },
+                                    required: "Le prix de suppression est requis",
+                                    min: { message: "Le prix ne peut pas être négatif" },
                                     valueAsNumber: true
                                 })}
                                 type="number"
-                                placeholder="Delete Price"
+                                placeholder="Prix de suppression"
                                 className="input input-bordered w-full"
                             />
                             {errors.deletePrice && <p className="text-red-500 text-sm mt-1">{errors.deletePrice.message}</p>}
                         </label>
+
                     </div>
 
                     {/* Product Details */}
                     <label className="form-control w-full my-6">
                         <div className="label">
-                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Product Details*</span>
+                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Détails du produit*</span>
                         </div>
                         <textarea
                             {...register("details", {
-                                required: "Product Details are required",
-                                minLength: { value: 20, message: "Details must be at least 20 characters" }
+                                required: "Les détails du produit sont requis"
                             })}
                             className="textarea textarea-bordered w-full min-h-32"
-                            placeholder="Product Details"
+                            placeholder="Détails du produit"
                         ></textarea>
                         {errors.details && <p className="text-red-500 text-sm mt-1">{errors.details.message}</p>}
                     </label>
 
 
 
+
                     {/* Multiple Image Upload */}
                     <div className="form-control w-full my-6">
                         <div className="label">
-                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Product Images*</span>
+                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Images du produit*</span>
                         </div>
                         <input
                             type="file"
                             accept="image/*"
+                            placeholder='Images du produit'
                             multiple
                             onChange={handleImageChange}
                             className="file-input w-full"
+                            
                         />
+                        
 
                         {/* Image Preview Grid */}
                         {previewUrls.length > 0 && (
@@ -288,7 +294,7 @@ const AddProduct = () => {
                         disabled={isUploading}
                         className="w-full my-6 text-white p-2 rounded flex items-center justify-center gap-2 bg-black disabled:bg-gray-400 hover:bg-gray-800 transition-colors"
                     >
-                        {isUploading ? 'Uploading...' : 'Add Product'}
+                        {isUploading ? 'Téléchargement en cours......' : 'Ajouter un produit'}
                     </button>
                 </form>
             </div>

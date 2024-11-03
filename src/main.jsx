@@ -56,6 +56,7 @@ import TermsAndConditions from './components/TermsAndConditions';
 import PrivacyPolicy from './components/PrivacyPolicy.jsx';
 import ShippingPolicy from './components/ShippingPolicy.jsx';
 import Profile from './components/Profile/Profile.jsx';
+import ErrorPage from './components/ErrorPage.jsx';
 
 const queryClient = new QueryClient();
 const stripePromise = loadStripe(import.meta.env.VITE_REACT_APP_STRIPE_PUBLIC_KEY);
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage/>,
     children: [
       { path: '/', element: <Home /> },
       { path: '/search', element: <Search /> },
@@ -88,7 +90,7 @@ const router = createBrowserRouter([
       },
       { path: '/cart', element: <PrivateRoute><Cart /></PrivateRoute> },
       { path: '/wishlist', element: <PrivateRoute><WishList /></PrivateRoute> },
-      { path: '/dashboard', element: <PrivateRoute><Dashboard /></PrivateRoute> },
+      { path: '/dashboard', element: <PrivateRoute><AdminRoute><Dashboard /></AdminRoute></PrivateRoute> },
       { path: '/add-product', element: <PrivateRoute><AdminRoute><AddProduct /></AdminRoute></PrivateRoute> },
       { path: '/manage-user', element: <PrivateRoute><AdminRoute><ManageUser /></AdminRoute></PrivateRoute> },
       { path: '/manage-product', element: <PrivateRoute><AdminRoute><ManageProduct /></AdminRoute></PrivateRoute> },

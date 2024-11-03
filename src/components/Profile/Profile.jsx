@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Camera, Mail, Phone, MapPin, Calendar, Edit2 } from 'lucide-react';
+import { Camera, Mail, Phone, MapPin, Calendar, Edit2, Heart } from 'lucide-react';
 import axios from 'axios';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import { FaCartPlus, FaFirstOrder } from 'react-icons/fa';
+import useCart from '../../hooks/useCart';
+import useWislist from '../../hooks/useWislist';
+import { NavLink } from 'react-router-dom';
 
 const Profile = () => {
+    const [cart] = useCart();
+    const [wishList] = useWislist();
     const { user } = useAuth();
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -41,15 +47,15 @@ const Profile = () => {
             setIsEditing(false);
             Swal.fire({
                 icon: 'success',
-                title: 'Profile Updated!',
-                text: 'Your profile has been successfully updated.',
+                title: 'Profil Mis à Jour !',
+                text: 'Votre profil a été mis à jour avec succès.',
             });
         } catch (error) {
             console.error('Error updating profile:', error);
             Swal.fire({
                 icon: 'error',
-                title: 'Update Failed',
-                text: 'There was an error updating your profile.',
+                title: 'Échec de la Mise à Jour',
+                text: 'Il y a eu une erreur lors de la mise à jour de votre profil.',
             });
         }
     };
@@ -77,7 +83,7 @@ const Profile = () => {
     if (!profileData) {
         return (
             <div className="text-center py-10">
-                <h2 className="text-2xl font-bold text-gray-700">Profile not found</h2>
+                <h2 className="text-2xl font-bold text-gray-700">Profil non trouvé</h2>
             </div>
         );
     }
@@ -89,7 +95,7 @@ const Profile = () => {
                     <div className="relative">
                         <img
                             src={profileData.photoURL || 'https://via.placeholder.com/150'}
-                            alt="Profile"
+                            alt="Profil"
                             className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                         />
                         <button className="absolute bottom-0 right-0 bg-white p-2 rounded-full shadow-lg">
@@ -115,7 +121,7 @@ const Profile = () => {
                     <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Name</label>
+                                <label className="block text-sm font-medium text-gray-700">Nom</label>
                                 <input
                                     type="text"
                                     name="name"
@@ -136,7 +142,7 @@ const Profile = () => {
                             </div>
                             
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Phone</label>
+                                <label className="block text-sm font-medium text-gray-700">Téléphone</label>
                                 <input
                                     type="tel"
                                     name="phone"
@@ -146,7 +152,7 @@ const Profile = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700">Address</label>
+                                <label className="block text-sm font-medium text-gray-700">Adresse</label>
                                 <input
                                     type="text"
                                     name="address"
@@ -161,13 +167,13 @@ const Profile = () => {
                                 onClick={handleCancel}
                                 className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                             >
-                                Cancel
+                                Annuler
                             </button>
                             <button
                                 onClick={handleSave}
                                 className="px-4 py-2 bg-[#097969] text-white rounded-md hover:bg-green-800"
                             >
-                                Save Changes
+                                Enregistrer les Changements
                             </button>
                         </div>
                     </div>
@@ -184,29 +190,72 @@ const Profile = () => {
                             <div className="flex items-center space-x-3">
                                 <Phone className="w-5 h-5 text-gray-500" />
                                 <div>
-                                    <p className="text-sm text-gray-500">Phone</p>
-                                    <p className="text-gray-900">{profileData.phone || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500">Téléphone</p>
+                                    <p className="text-gray-900">{profileData.phone || 'Non défini'}</p>
                                 </div>
                             </div>
                             <div className="flex items-center space-x-3">
                                 <MapPin className="w-5 h-5 text-gray-500" />
                                 <div>
-                                    <p className="text-sm text-gray-500">Address</p>
-                                    <p className="text-gray-900">{profileData.address || 'Not set'}</p>
+                                    <p className="text-sm text-gray-500">Adresse</p>
+                                    <p className="text-gray-900">{profileData.address || 'Non défini'}</p>
                                 </div>
                             </div>
-                            {/* <div className="flex items-center space-x-3">
-                                <Calendar className="w-5 h-5 text-gray-500" />
-                                <div>
-                                    <p className="text-sm text-gray-500">Member Since</p>
-                                    <p className="text-gray-900">
-                                        {new Date(profileData.createdAt).toLocaleDateString()}
-                                    </p>
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                 )}
+                <div>
+                    <div className='flex md:flex-row flex-wrap md:justify-center border-b-2 border-black p-3 gap-3 '>
+                        <NavLink to='/cart' className='flex gap-3 h-16 items-center border-2 border-black rounded-md p-2'>
+                            <div style={{ position: 'relative', display: 'inline-block', color: 'black' }}>
+                                <FaCartPlus size={30} />
+
+                                <span
+                                    style={{
+                                        position: 'absolute',
+                                        top: '-10px',
+                                        right: '-10px',
+                                        backgroundColor: '#097969',
+                                        color: 'white',
+                                        borderRadius: '50%',
+                                        padding: '5px 4px',
+                                        fontSize: '10px',
+                                    }}
+                                >
+                                    +{cart.length}
+                                </span>
+
+                            </div>
+                            <h1 className='md:text-2xl text-black uppercase'>Panier</h1>
+                        </NavLink>
+                        <NavLink to='/wishlist' className='flex gap-3 h-16 items-center border-2 border-black rounded-md p-2'>
+                            <div style={{ position: 'relative', display: 'inline-block', color: 'black' }}>
+                                <Heart size={30} />
+
+                                <span
+                                    style={{
+                                        position: 'absolute',
+                                        top: '-10px',
+                                        right: '-10px',
+                                        backgroundColor: '#097969',
+                                        color: 'white',
+                                        borderRadius: '50%',
+                                        padding: '5px 4px',
+                                        fontSize: '10px',
+                                    }}
+                                >
+                                    +{wishList.length}
+                                </span>
+
+                            </div>
+                            <h1 className='md:text-2xl text-black uppercase'>Liste de Souhaits</h1>
+                        </NavLink>
+                        <NavLink to='/orders' className='flex gap-3 h-16 items-center border-2 border-black rounded-md p-2'>
+                            <FaFirstOrder size={30} className='text-black' />
+                            <h1 className='md:text-2xl text-black uppercase'>Commandes</h1>
+                        </NavLink>
+                    </div>
+                </div>
             </div>
         </div>
     );

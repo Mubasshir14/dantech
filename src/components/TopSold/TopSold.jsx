@@ -7,7 +7,6 @@ const TopSold = () => {
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,9 +30,9 @@ const TopSold = () => {
     if (loading) return <Loader />;
     return (
         <div>
-            <div className='my-10 max-w-screen-xl mx-auto'>
-                <h1 className='font-poppin text-3xl uppercase text-center font-bold'>Top Sold</h1>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5'>
+            <div className='my-10 max-w-screen-xl mx-auto px-3'>
+                <h1 className='font-poppin text-3xl uppercase text-center font-bold'>Meilleures Ventes</h1>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5'>
                     {topSale.map(p => (
                         <ProductCard p={p} key={p._id} />
                     ))}

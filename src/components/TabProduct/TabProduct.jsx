@@ -37,25 +37,25 @@ const TabProduct = () => {
         <div className='max-w-screen-xl mx-auto'>
             <div className='flex items-center justify-center mt-10 mb-10'>
                 <Tabs selectedIndex={activeTab === 'flash-sale' ? 0 : 1} onSelect={(index) => setActiveTab(index === 0 ? 'flash-sale' : 'new-arrival')}>
-                    <TabList className="flex items-center justify-center border-gray-300">
+                    <TabList className="flex items-center justify-center border-gray-30">
                         <Tab
                             className={`py-2 font-poppin font-bold uppercase px-4 text-lg cursor-pointer 
                                 ${activeTab === 'flash-sale' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
                                 focus:outline-none`}
                         >
-                            FLASH SALE
+                            VENTE FLASH
                         </Tab>
                         <Tab
                             className={`py-2 px-4 text-lg font-bold uppercase cursor-pointer 
                                 ${activeTab === 'new-arrival' ? 'border-b-2 border-[#097969] text-[#097969]' : 'hover:text-[#097969]'} 
                                 focus:outline-none`}
                         >
-                            New Arrival
+                            Nouvelle Arrivée
                         </Tab>
                     </TabList>
 
                     <TabPanel>
-                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-4 mt-5'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4 mt-5'>
                             {newArrival.map(p => (
                                 <ProductCard p={p} key={p._id} />
                             ))}
@@ -63,7 +63,7 @@ const TabProduct = () => {
                     </TabPanel>
 
                     <TabPanel>
-                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5'>
+                        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5'>
                             {flashSale.map(p => (
                                 <ProductCard p={p} key={p._id} />
                             ))}

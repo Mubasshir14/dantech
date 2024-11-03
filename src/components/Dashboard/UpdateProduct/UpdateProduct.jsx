@@ -19,11 +19,11 @@ const UpdateProduct = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch product data by ID
+        // Récupérer les données du produit par ID
         axios.get(`https://dantech-server.onrender.com/product/${id}`)
             .then(response => {
                 const data = response.data;
-                // Set form default values from fetched data
+                // Définir les valeurs par défaut du formulaire à partir des données récupérées
                 setValue('name', data.name);
                 setValue('details', data.details);
                 setValue('category', data.category);
@@ -31,14 +31,14 @@ const UpdateProduct = () => {
                 setValue('sellingPrice', data.price);
                 setValue('deletePrice', data.deletePrice);
 
-                // Set preview images if they exist
+                // Définir les images d'aperçu si elles existent
                 if (data.images && data.images.length > 0) {
                     setPreviewUrls(data.images);
                 }
                 setLoading(false);
             })
             .catch(error => {
-                console.error('Error fetching product:', error);
+                console.error('Erreur lors de la récupération du produit :', error);
                 setLoading(false);
             });
     }, [id, setValue]);
@@ -46,18 +46,18 @@ const UpdateProduct = () => {
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
 
-        // Create preview URLs
+        // Créer des URLs d'aperçu
         const newPreviewUrls = files.map(file => URL.createObjectURL(file));
         setPreviewUrls(prev => [...prev, ...newPreviewUrls]);
 
-        // Store selected files
+        // Stocker les fichiers sélectionnés
         setSelectedImages(prev => [...prev, ...files]);
     };
 
     const removeImage = (index) => {
         setSelectedImages(prev => prev.filter((_, i) => i !== index));
         setPreviewUrls(prev => {
-            // Revoke the URL to prevent memory leaks
+            // Révoquer l'URL pour éviter les fuites de mémoire
             URL.revokeObjectURL(prev[index]);
             return prev.filter((_, i) => i !== index);
         });
@@ -105,18 +105,18 @@ const UpdateProduct = () => {
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `${data.name} has been updated successfully.`,
+                    title: `${data.name} a été mis à jour avec succès.`,
                     showConfirmButton: false,
                     timer: 1500
                 });
                 navigate('/manage-product');
             }
         } catch (error) {
-            console.error('Error updating product:', error);
+            console.error('Erreur lors de la mise à jour du produit :', error);
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "An error occurred. Please try again.",
+                title: "Une erreur s'est produite. Veuillez réessayer.",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -134,132 +134,132 @@ const UpdateProduct = () => {
     return (
         <div>
             <Dashboard />
-            <h1 className='font-poppin text-2xl md:text-3xl uppercase font-extrabold text-center -mt-20'>UPDATE PRODUCT</h1>
+            <h1 className='font-poppin text-2xl md:text-3xl uppercase font-extrabold text-center -mt-20'>MISE À JOUR DU PRODUIT</h1>
             <div className="flex items-center justify-center md:mb-20 p-2">
                 <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 rounded shadow-md w-full max-w-lg mt-6 border-2 border-black">
-                    {/* Product Name */}
+                    {/* Nom du produit */}
                     <label className="form-control w-full">
                         <div className="label">
-                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Product Name*</span>
+                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Nom du produit*</span>
                         </div>
                         <input
                             {...register("name", {
-                                required: "Product Name is required",
-                                minLength: { value: 3, message: "Name must be at least 3 characters" }
+                                required: "Le nom du produit est requis",
+                                minLength: { value: 3, message: "Le nom doit comporter au moins 3 caractères" }
                             })}
                             type="text"
-                            placeholder="Product Name"
+                            placeholder="Nom du produit"
                             className="input input-bordered w-full"
                         />
                         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
                     </label>
 
                     <div className="flex flex-col sm:flex-row gap-6">
-                        {/* Category Selection */}
+                        {/* Sélection de la catégorie */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Category*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Catégorie*</span>
                             </div>
                             <select
                                 {...register("category", {
-                                    required: "Category is required"
+                                    required: "La catégorie est requise"
                                 })}
                                 className="select select-bordered w-full font-bold uppercase font-poppin"
                             >
-                                <option disabled value='default'>Select category</option>
+                                <option disabled value='default'>Sélectionner la catégorie</option>
                                 <option value="earbuds">Earbuds</option>
-                                <option value="smartwatch">Smartwatch</option>
-                                <option value="cover">Cover</option>
-                                <option value="earphone">Earphone</option>
-                                <option value="adapter">Adapter</option>
+                                <option value="smartwatch">Montre connectée</option>
+                                <option value="cover">Étui</option>
+                                <option value="earphone">Écouteur</option>
+                                <option value="adapter">Adaptateur</option>
                                 <option value="powerbank">Powerbank</option>
-                                <option value="speaker">Speakers</option>
+                                <option value="speaker">Haut-parleurs</option>
                                 <option value="microphone">Microphone</option>
-                                <option value="monitor">Monitor</option>
-                                <option value="camera">Camera</option>
+                                <option value="monitor">Moniteur</option>
+                                <option value="camera">Caméra</option>
                             </select>
                             {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
                         </label>
 
-                        {/* Sub Category Selection */}
+                        {/* Sélection de la sous-catégorie */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Sub Category*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Sous-catégorie*</span>
                             </div>
                             <select
                                 {...register("subcategory", {
-                                    required: "Subcategory is required"
+                                    required: "La sous-catégorie est requise"
                                 })}
                                 className="select select-bordered w-full font-bold uppercase font-poppin"
                             >
-                                <option disabled value='default'>Select subcategory</option>
-                                <option value="flashdeal">Flash Deal</option>
-                                <option value="newarrival">New Arrival</option>
-                                <option value="topsale">Top Sale</option>
-                                <option value="blank">None</option>
+                                <option disabled value='default'>Sélectionner la sous-catégorie</option>
+                                <option value="flashdeal">Offre flash</option>
+                                <option value="newarrival">Nouvelle arrivée</option>
+                                <option value="topsale">Meilleure vente</option>
+                                <option value="blank">Aucun</option>
                             </select>
                             {errors.subcategory && <p className="text-red-500 text-sm mt-1">{errors.subcategory.message}</p>}
                         </label>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-6">
-                        {/* Selling Price */}
+                        {/* Prix de vente */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Selling Price*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Prix de vente*</span>
                             </div>
                             <input
                                 {...register("sellingPrice", {
-                                    required: "Selling Price is required",
-                                    min: { message: "Price cannot be negative" },
+                                    required: "Le prix de vente est requis",
+                                    min: { message: "Le prix ne peut pas être négatif" },
                                     valueAsNumber: true
                                 })}
                                 type="number"
-                                placeholder="Selling Price"
+                                placeholder="Prix de vente"
                                 className="input input-bordered w-full"
                             />
                             {errors.sellingPrice && <p className="text-red-500 text-sm mt-1">{errors.sellingPrice.message}</p>}
                         </label>
 
-                        {/* Delete Price */}
+                        {/* Prix de suppression */}
                         <label className="form-control w-full mt-3">
                             <div className="label">
-                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Delete Price*</span>
+                                <span className="label-text text-gray-700 font-bold uppercase font-poppin">Prix de suppression</span>
                             </div>
                             <input
                                 {...register("deletePrice", {
-                                    required: "Delete Price is required",
-                                    min: { message: "Price cannot be negative" },
+                                    required: false,
+                                    min: { message: "Le prix ne peut pas être négatif" },
                                     valueAsNumber: true
                                 })}
                                 type="number"
-                                placeholder="Delete Price"
+                                placeholder="Prix de suppression"
                                 className="input input-bordered w-full"
                             />
                             {errors.deletePrice && <p className="text-red-500 text-sm mt-1">{errors.deletePrice.message}</p>}
                         </label>
                     </div>
 
-                    {/* Product Details */}
-                    <label className="form-control w-full my-6">
+                    {/* Détails du produit */}
+                    <label className="form-control w-full mt-3">
                         <div className="label">
-                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Product Details*</span>
+                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Détails du produit*</span>
                         </div>
                         <textarea
                             {...register("details", {
-                                required: "Product Details are required",
-                                minLength: { value: 20, message: "Details must be at least 20 characters" }
+                                required: "Les détails sont requis",
+                                minLength: { value: 20, message: "Les détails doivent comporter au moins 20 caractères" }
                             })}
-                            className="textarea textarea-bordered w-full min-h-32"
-                            placeholder="Product Details"
+                            placeholder="Détails du produit"
+                            className="textarea textarea-bordered h-24"
                         ></textarea>
                         {errors.details && <p className="text-red-500 text-sm mt-1">{errors.details.message}</p>}
                     </label>
 
-                    {/* Multiple Image Upload */}
+                    {/* Sélection d'images */}
                     <div className="form-control w-full my-6">
                         <div className="label">
-                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Product Images*</span>
+                            <span className="label-text text-gray-700 font-bold uppercase font-poppin">Sélectionner des images*</span>
                         </div>
                         <input
                             type="file"
@@ -292,14 +292,33 @@ const UpdateProduct = () => {
                         )}
                     </div>
 
-                    {/* Submit Button */}
-                    <button
-                        type="submit"
-                        disabled={isUploading}
-                        className="w-full my-6 text-white p-2 rounded flex items-center justify-center gap-2 bg-black disabled:bg-gray-400 hover:bg-gray-800 transition-colors"
-                    >
-                        {isUploading ? 'Updating...' : 'Update Product'}
-                    </button>
+                    <div className="flex flex-col md:flex-row gap-3 mt-5">
+                        {/* Images sélectionnées */}
+                        <div className='flex flex-col'>
+                            <span className='font-bold text-gray-700 uppercase font-poppin'>Aperçu des images :</span>
+                            <div className='flex flex-row overflow-x-auto mt-2'>
+                                {previewUrls.map((url, index) => (
+                                    <div key={index} className='relative'>
+                                        <img src={url} alt="Aperçu" className="w-20 h-20 object-cover mr-2 border-2 border-gray-300 rounded" />
+                                        <button
+                                            type='button'
+                                            onClick={() => removeImage(index)}
+                                            className='absolute top-0 right-0 bg-red-500 text-white rounded-full p-1'
+                                        >
+                                            <X className='w-3 h-3' />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bouton de mise à jour */}
+                    <div className='flex justify-end mt-5'>
+                        <button type="submit" className={`w-full my-6 text-white p-2 rounded flex items-center justify-center gap-2 bg-black disabled:bg-gray-400 hover:bg-gray-800 transition-colors ${isUploading ? 'Mise à jour en cours...' : ''}`}>
+                            {isUploading ? "Mise à jour en cours..." : "Mettre à jour le produit"}
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

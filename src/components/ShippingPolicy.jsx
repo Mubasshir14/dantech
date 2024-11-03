@@ -3,62 +3,62 @@ import React from 'react';
 const ShippingPolicy = () => {
     return (
         <section className="container mx-auto py-12 px-6 max-w-screen-xl text-justify">
-            <h1 className="text-3xl font-semibold text-center mb-8 font-poppin uppercase  text-black">Shipping Policy</h1>
+            <h1 className="text-3xl font-semibold text-center mb-8 font-poppin uppercase text-black">Politique d'Expédition</h1>
             <div className="space-y-6 text-gray-700 leading-relaxed">
                 
                 <p className="text-lg">
-                    We work hard to get your order to you as soon as possible! Here’s everything you need to know about our shipping process, rates, and timelines.
+                    Nous travaillons dur pour vous livrer votre commande le plus rapidement possible ! Voici tout ce que vous devez savoir sur notre processus d'expédition, nos tarifs et nos délais.
                 </p>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#097969]">Shipping Rates</h2>
+                    <h2 className="text-xl font-semibold text-[#097969]">Tarifs d'Expédition</h2>
                     <p>
-                        Shipping rates vary based on your location and the shipping method you choose at checkout. You can view these rates and select your preferred option during the checkout process. Orders over <span className="font-bold">$50</span> qualify for free standard shipping.
+                        Les tarifs d'expédition varient en fonction de votre emplacement et du mode d'expédition que vous choisissez lors du paiement. Vous pouvez consulter ces tarifs et sélectionner votre option préférée pendant le processus de commande. Les commandes de plus de <span className="font-bold">$50</span> bénéficient de la livraison standard gratuite.
                     </p>
                 </div>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#097969]">Processing Time</h2>
+                    <h2 className="text-xl font-semibold text-[#097969]">Délai de Traitement</h2>
                     <p>
-                        Orders are typically processed within <span className="font-bold">1-2 business days</span>. During high-demand periods, processing may take slightly longer, but we’ll keep you informed if there are any delays.
+                        Les commandes sont généralement traitées dans un délai de <span className="font-bold">1 à 2 jours ouvrables</span>. Pendant les périodes de forte demande, le traitement peut prendre un peu plus de temps, mais nous vous tiendrons informé en cas de retard.
                     </p>
                 </div>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#097969]">Domestic Shipping</h2>
+                    <h2 className="text-xl font-semibold text-[#097969]">Expédition Domestique</h2>
                     <p>
-                        We offer multiple shipping options to fit your needs:
+                        Nous proposons plusieurs options d'expédition pour répondre à vos besoins :
                     </p>
                     <ul className="list-disc list-inside ml-4">
-                        <li><span className="font-bold">Standard Shipping</span>: 5-7 business days.</li>
-                        <li><span className="font-bold">Express Shipping</span>: 2-3 business days.</li>
-                        <li><span className="font-bold">Next-Day Delivery</span>: Available in select locations for orders placed by 5 PM.</li>
+                        <li><span className="font-bold">Expédition Standard</span> : 5-7 jours ouvrables.</li>
+                        <li><span className="font-bold">Expédition Express</span> : 2-3 jours ouvrables.</li>
+                        <li><span className="font-bold">Livraison le Jour Suivant</span> : Disponible dans certaines localités pour les commandes passées avant 17 heures.</li>
                     </ul>
                 </div>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#097969]">International Shipping</h2>
+                    <h2 className="text-xl font-semibold text-[#097969]">Expédition Internationale</h2>
                     <p>
-                        We ship to select countries internationally! Delivery times and shipping fees will vary based on the destination. Please note that international shipments may be subject to customs duties, taxes, or additional fees upon arrival.
+                        Nous expédions vers certains pays à l'international ! Les délais de livraison et les frais d'expédition varient en fonction de la destination. Veuillez noter que les expéditions internationales peuvent être soumises à des droits de douane, taxes ou frais supplémentaires à l'arrivée.
                     </p>
                 </div>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#097969]">Order Tracking</h2>
+                    <h2 className="text-xl font-semibold text-[#097969]">Suivi de Commande</h2>
                     <p>
-                        Once your order is shipped, we’ll send you a tracking link via email. You can use this link to track your order’s journey from our warehouse to your doorstep. For any tracking issues, please contact our <a href="/support" className="text-[#065f4a] underline">Customer Support</a> team for assistance.
+                        Une fois votre commande expédiée, nous vous enverrons un lien de suivi par e-mail. Vous pouvez utiliser ce lien pour suivre le trajet de votre commande depuis notre entrepôt jusqu'à votre porte. Pour tout problème de suivi, veuillez contacter notre <a href="/support" className="text-[#065f4a] underline">équipe d'Assistance Client</a> pour obtenir de l'aide.
                     </p>
                 </div>
 
                 <div className="space-y-4">
-                    <h2 className="text-xl font-semibold text-[#097969]">Lost or Delayed Packages</h2>
+                    <h2 className="text-xl font-semibold text-[#097969]">Colis Perdus ou Retardés</h2>
                     <p>
-                        If your package is delayed or appears lost, please reach out to us within <span className="font-bold">7 days</span> of the expected delivery date. We’re here to help ensure you receive your order or get the necessary support in case of delays.
+                        Si votre colis est retardé ou semble perdu, veuillez nous contacter dans un délai de <span className="font-bold">7 jours</span> à compter de la date de livraison prévue. Nous sommes là pour vous aider à vous assurer que vous recevez votre commande ou à obtenir le soutien nécessaire en cas de retard.
                     </p>
                 </div>
 
                 {/* <p className="text-center mt-8">
-                    If you have any questions about shipping, please contact our <a href="/support" className="text-[#097969] underline">Customer Support</a> team. We’re here to help!
+                    Si vous avez des questions concernant l'expédition, veuillez contacter notre <a href="/support" className="text-[#097969] underline">équipe d'Assistance Client</a>. Nous sommes là pour vous aider !
                 </p> */}
             </div>
         </section>

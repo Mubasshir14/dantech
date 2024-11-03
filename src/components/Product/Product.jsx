@@ -42,8 +42,8 @@ const Product = () => {
 
     return (
         <div className='my-10 max-w-screen-xl mx-auto'>
-            <h1 className='font-poppin text-3xl uppercase text-center font-bold'>All Products</h1>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5'>
+            <h1 className='font-poppin text-3xl uppercase text-center font-bold'>Tous les Produits</h1>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5'>
                 {currentProducts.map(p => (
                     <ProductCard p={p} key={p._id} />
                 ))}
